@@ -1,5 +1,5 @@
-import '../app/globals.css';
-import Link from 'next/link';
+import Layout from "@/components/Layout";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   try {
@@ -19,11 +19,8 @@ export async function getServerSideProps() {
 
 export default function PostPage(props) {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <Layout>
       <h1 className="text-4xl font-bold text-center mb-8">Blog Posts</h1>
-      <Link href="/add-post" legacyBehavior>
-        <a className='inline-block mb-4 px-4 py-2 bg-green-500 text-white rounded-md'>Add a Post</a>
-      </Link>
       <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {props.posts.map((post) => (
           <li
@@ -44,6 +41,6 @@ export default function PostPage(props) {
           </li>
         ))}
       </ul>
-    </div>
+    </Layout>
   );
 }

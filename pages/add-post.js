@@ -1,4 +1,4 @@
-import '../app/globals.css';
+import Layout from "@/components/Layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -16,28 +16,28 @@ export default function AddPostPage() {
     setError(null);
 
     try {
-        const response = await fetch('/api/posts', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({title, content})
-        });
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ title, content }),
+      });
 
-        if (!response.ok) {
-            throw new Error('Something went wrong while creating the new post');
-        }
+      if (!response.ok) {
+        throw new Error("Something went wrong while creating the new post");
+      }
 
-        router.push('/');
+      router.push("/");
     } catch (error) {
-        setError(error.message);
+      setError(error.message);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-  } 
+  };
 
   return (
-    <div className="container mx-auto p-4">
+    <Layout>
       <h1 className="text-2xl font-bold mb-4">Add a New Post</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -47,7 +47,7 @@ export default function AddPostPage() {
           >
             Title
           </label>
-          <input 
+          <input
             type="text"
             id="title"
             value={title}
@@ -63,7 +63,7 @@ export default function AddPostPage() {
           >
             Content
           </label>
-          <textarea 
+          <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -72,16 +72,16 @@ export default function AddPostPage() {
           />
         </div>
         <div>
-            <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                disabled={loading}
-            >
-                {loading ? 'Creating...' : 'Create Post'}
-            </button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            disabled={loading}
+          >
+            {loading ? "Creating..." : "Create Post"}
+          </button>
         </div>
         {error && <p className="text-red-500">{error}</p>}
       </form>
-    </div>
+    </Layout>
   );
 }
